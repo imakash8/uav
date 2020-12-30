@@ -1,0 +1,18 @@
+[Unit]
+Description=UAVcast, Software for Companion Computer based UAVs
+Requires=network-online.target
+Wants=network-online.target
+After=network-online.target
+[Service]
+WorkingDirectory=/opt/UAVcast-Pro/
+Type=forking
+GuessMainPID=no
+ExecStartPre=/bin/sh -c 'while ! /usr/bin/mongo --eval "db.version()" > /dev/null 2>&1; do sleep 0.1; done'
+ExecStart=/bin/bash Casting.sh
+ExecStop=/bin/bash Casting.sh stop
+RemainAfterExit=yes
+KillMode=control-group
+SyslogIdentifier=​UAVcast
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target

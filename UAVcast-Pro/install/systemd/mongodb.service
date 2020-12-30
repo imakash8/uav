@@ -1,0 +1,12 @@
+[Unit]
+Description=Database for UAVcast-Pro
+Documentation=man:mongod(1)
+[Service]
+User=mongodb
+PermissionsStartOnly=true
+ExecStartPre=/bin/mkdir -p /var/run/mongodb
+ExecStartPre=/bin/chown -R mongodb:mongodb /var/run/mongodb
+ExecStart=/usr/bin/mongod --config /etc/mongodb.conf
+PIDFile=/var/run/mongodb/mongod.pid
+[Install]
+WantedBy=multi-user.target

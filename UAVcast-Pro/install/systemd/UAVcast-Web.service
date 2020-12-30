@@ -1,0 +1,20 @@
+[Unit]
+Description=Webinterface for UAVcast
+Requires=network-online.target
+Wants=network-online.target
+After=network-online.target
+[Service]
+WorkingDirectory=/opt/UAVcast-Pro/web/
+Type=simple
+GuessMainPID=no
+ExecStartPre=/bin/bash /opt/UAVcast-Pro/usr/mongodb/mongodb_check.sh
+ExecStart=/opt/UAVcast-Pro/web/webinterface
+KillMode=control-group
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=​UAVcast-Webinterface
+Restart=on-failure
+RestartSec=10
+Environment="NODE_ENV=production" "PORT=80"
+[Install]
+WantedBy=multi-user.target
